@@ -1,7 +1,6 @@
-import { Env } from '../index';
-import { ResultAsync } from 'neverthrow';
 import { getDb as getDbFromDatabase } from '@meridian/database';
-import { Context } from 'hono';
+import { Context, MiddlewareHandler } from 'hono';
+import { ResultAsync } from 'neverthrow';
 import { HonoEnv } from '../app';
 
 export function getDb(databaseUrl: string) {
@@ -57,3 +56,26 @@ export function hasValidAuthToken(c: Context<HonoEnv>) {
   }
   return true;
 }
+
+export const corsMiddleware: MiddlewareHandler<HonoEnv> = async (c, next) => {
+  const origin = c.env.CORS_ORIGIN || '*';
+
+  // Handle preflight requests
+  if (c.req.method === 'OPTIONS') {
+    return new Response(null, {
+      status: 204,
+      headers: {
+        'Access-Control-Allow-Origin': origin,
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Max-Age': '86400',
+      },
+    });
+  }
+
+  // Add CORS headers to all responses
+  await next();
+  c.res.headers.set('Access-Control-Allow-Origin', origin);
+  c.res.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  c.res.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+};

@@ -15,6 +15,9 @@ export type Env = {
   GOOGLE_BASE_URL: string;
 
   MERIDIAN_SECRET_KEY: string;
+
+  // CORS
+  CORS_ORIGIN: string;
 };
 
 export default {
@@ -29,5 +32,5 @@ export default {
   },
 } satisfies ExportedHandler<Env>;
 
-export { ScrapeRssFeed } from './workflows/rssFeed.workflow';
 export { ProcessArticles } from './workflows/processArticles.workflow';
+export { ScrapeRssFeed } from './workflows/rssFeed.workflow';
