@@ -29,12 +29,12 @@ crons = [ "4 * * * *" ]
 
 [env.production]
 [[env.production.workflows]]
-name = "meridian-production-rss-scraper"
+name = "meridian_scrape_rss_feed"
 binding = "SCRAPE_RSS_FEED"
 class_name = "ScrapeRssFeed"
 
 [[env.production.workflows]]
-name = "meridian-production-article-processor"
+name = "meridian_process_articles"
 binding = "PROCESS_ARTICLES"
 class_name = "ProcessArticles"
 
