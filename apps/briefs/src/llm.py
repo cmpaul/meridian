@@ -1,6 +1,7 @@
 import os
-from openai import OpenAI
+
 from dotenv import load_dotenv
+from openai import OpenAI
 
 load_dotenv()
 
@@ -11,8 +12,29 @@ client = OpenAI(
 )
 
 
-def call_llm(model: str, messages: list[dict], temperature: float = 0):
+def call_llm(
+    model: str, messages: list[dict[str, str]], temperature: float = 0.0
+) -> tuple[str, tuple[int, int]]:
+    """
+    Call a language model with the given parameters and return the response.
 
+    Args:
+        model: The name of the language model to use (e.g., 'gpt-4', 'gpt-3.5-turbo')
+        messages: A list of message dictionaries containing 'role' and 'content' keys
+        temperature: Controls randomness in the response (0.0 = deterministic, higher values = more random)
+
+    Returns:
+        A tuple containing:
+        - The generated text response as a string
+        - A tuple of (prompt_tokens, completion_tokens) representing token usage
+
+    Example:
+        >>> messages = [
+        ...     {"role": "system", "content": "You are a helpful assistant."},
+        ...     {"role": "user", "content": "Hello!"}
+        ... ]
+        >>> response, (prompt_tokens, completion_tokens) = call_llm("gpt-4", messages)
+    """
     response = client.chat.completions.create(
         model=model,
         messages=messages,

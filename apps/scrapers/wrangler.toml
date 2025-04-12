@@ -1,5 +1,5 @@
 #:schema node_modules/wrangler/config-schema.json
-name = "meridian"
+name = "meridian-scrapers"
 main = "src/index.ts"
 compatibility_date = "2025-02-14"
 compatibility_flags = [ "nodejs_compat" ]
@@ -19,7 +19,7 @@ binding = "PROCESS_ARTICLES"
 class_name = "ProcessArticles"
 
 [vars]
-CORS_ORIGIN = "http://127.0.0.1:3000"
+CORS_ORIGIN = "https://meridian-scrapers.cmpaul.workers.dev"
 
 [triggers]
 # Schedule cron triggers:
@@ -39,4 +39,4 @@ binding = "PROCESS_ARTICLES"
 class_name = "ProcessArticles"
 
 [env.production.vars]
-CORS_ORIGIN = "https://news.iliane.xyz"
+CORS_ORIGIN = "https://news.hakuna-automata.com"

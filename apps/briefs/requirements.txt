@@ -1,0 +1,17 @@
+openai
+json-repair
+google-genai
+gliclass
+rapidfuzz
+transformers>=4.48.0
+retry
+ipywidgets
+pandas
+numpy
+umap-learn
+hdbscan
+supabase
+python-dotenv
+pydantic>=2.0.0
+torch
+tqdm

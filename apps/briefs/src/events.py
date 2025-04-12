@@ -1,13 +1,11 @@
-import requests
 import os
-from datetime import date
-from pydantic import BaseModel, field_validator
+from datetime import date, datetime
 from typing import Optional
+
 import pandas as pd
-from datetime import datetime
-from typing import Optional
-from pydantic import BaseModel, field_validator
+import requests
 from dotenv import load_dotenv
+from pydantic import BaseModel, field_validator
 
 load_dotenv()
 
@@ -47,7 +45,7 @@ class Event(BaseModel):
 
 
 def get_events(date: str = None):
-    url = f"https://meridian-production.alceos.workers.dev/events"
+    url = f"https://meridian-scrapers.cmpaul.workers.dev/events"
 
     if date:
         url += f"?date={date}"

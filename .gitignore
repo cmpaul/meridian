@@ -175,6 +175,7 @@ dist
 .DS_Store
 
 .venv
+venv
 
 .wrangler
 
@@ -187,3 +188,4 @@ browser-worker
 .dev.vars
 
 apps/scrapers/feeds.json
+__pycache__
