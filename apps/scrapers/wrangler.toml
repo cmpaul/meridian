@@ -19,7 +19,7 @@ binding = "PROCESS_ARTICLES"
 class_name = "ProcessArticles"
 
 [vars]
-CORS_ORIGIN = "https://meridian-bl1.pages.dev"
+CORS_ORIGIN = "https//localhost:8787"
 
 [triggers]
 # Schedule cron triggers:

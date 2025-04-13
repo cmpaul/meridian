@@ -1,13 +1,11 @@
-import { $articles, $sources, and, gte, lte, isNotNull, eq, not } from '@meridian/database';
-import { Env } from './index';
-import { getDb, hasValidAuthToken } from './lib/utils';
+import { $articles, $sources, and, eq, gte, isNotNull, lte, not } from '@meridian/database';
 import { Hono } from 'hono';
 import { trimTrailingSlash } from 'hono/trailing-slash';
+import { Env } from './index';
+import { getDb, hasValidAuthToken } from './lib/utils';
 import openGraph from './routers/openGraph.router';
 import reportsRouter from './routers/reports.router';
 import { startRssFeedScraperWorkflow } from './workflows/rssFeed.workflow';
-import { getRssFeedWithFetch } from './lib/puppeteer';
-import { parseRSSFeed } from './lib/parsers';
 
 export type HonoEnv = { Bindings: Env };
 
@@ -88,8 +86,8 @@ const app = new Hono<HonoEnv>()
     return c.json(response);
   })
   .get('/trigger-rss', async c => {
-    const token = c.req.query('token');
-    if (token !== c.env.MERIDIAN_SECRET_KEY) {
+    const hasValidToken = hasValidAuthToken(c);
+    if (!hasValidToken) {
       return c.json({ error: 'Unauthorized' }, 401);
     }
 
