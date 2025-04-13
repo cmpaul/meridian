@@ -1,10 +1,23 @@
-import { getDb as getDbFromDatabase } from '@meridian/database';
+import { client as createClient, getDb as getDbFromDatabase } from '@meridian/database';
 import { Context, MiddlewareHandler } from 'hono';
 import { ResultAsync } from 'neverthrow';
 import { HonoEnv } from '../app';
 
+let currentClient: ReturnType<typeof createClient> | null = null;
+
 export function getDb(databaseUrl: string) {
+  if (currentClient) {
+    currentClient.end();
+  }
+  currentClient = createClient(databaseUrl, { prepare: false });
   return getDbFromDatabase(databaseUrl, { prepare: false });
+}
+
+export function disposeDb() {
+  if (currentClient) {
+    currentClient.end();
+    currentClient = null;
+  }
 }
 
 export const safeFetch = ResultAsync.fromThrowable(
